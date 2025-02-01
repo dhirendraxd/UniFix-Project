@@ -1,10 +1,12 @@
-// src/pages/Index.tsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, CheckCircle, FileText, Bell } from "lucide-react";
+import { ArrowRight, CheckCircle, FileText, Bell, LogIn, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const Index = () => {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -15,18 +17,33 @@ const Index = () => {
             Our platform helps you report campus issues quickly and track progress in real-time.
             Get them fixed faster by notifying the right team.
           </p>
-          <div className="flex gap-4 justify-center">
-            <Button size="lg" className="gap-2" asChild>
-              <Link to="/report">
-                Report an Issue <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2" asChild>
-              <Link to="/track-issues">
-                Track Your Issues <FileText className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
+          {user ? (
+            <div className="flex gap-4 justify-center">
+              <Button size="lg" className="gap-2" asChild>
+                <Link to="/report">
+                  Report an Issue <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="gap-2" asChild>
+                <Link to="/track-issues">
+                  Track Your Issues <FileText className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-4 justify-center mt-8">
+              <Button size="lg" variant="outline" className="gap-2" asChild>
+                <Link to="/signup">
+                  Sign Up <UserPlus className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="gap-2" asChild>
+                <Link to="/login">
+                  Login <LogIn className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 

@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MapPin, Upload } from "lucide-react";
+import { MapPin, Upload, ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type FormData = {
   category: string;
@@ -53,7 +54,10 @@ const ReportIssue = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="container mx-auto py-8 px-4 max-w-3xl bg-white/80 backdrop-blur-md p-8 rounded-lg shadow-lg">
+      <div className="container mx-auto py-8 px-4 max-w-3xl bg-white/80 backdrop-blur-md p-8 rounded-lg shadow-lg relative">
+        <Link to="/" className="absolute top-4 left-4 text-primary hover:text-primary/80">
+          <ChevronLeft className="h-6 w-6" />
+        </Link>
         <h1 className="text-4xl font-bold mb-6 text-foreground text-center">Report an Issue</h1>
         <p className="text-muted-foreground mb-8 text-center">
           Help us resolve campus issues quickly and effectively. Please fill out the details below.
@@ -165,8 +169,8 @@ const ReportIssue = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-4 ">
-            <div className="flex items-center space-x-2 ">
+          <div className="space-y-4 text-center">
+            <div className="flex items-center space-x-2 justify-center">
               <Checkbox
                 id="anonymous"
                 checked={isAnonymous}

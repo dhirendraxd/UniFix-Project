@@ -1,14 +1,41 @@
-// src/pages/TrackYourIssues.tsx
 import React, { useState } from 'react';
 import IssueList from '@/components/ui/IssuesList';
 import FilterOptions from '@/components/ui/FilterOptions';
-import { mockIssues } from '@/mockdata';
+import { mockIssues } from '@/mockData';
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { ChevronLeft, User } from "lucide-react";
+
+// Mock user data
+const user = {
+  name: "John Doe",
+  profilePicture: "https://th.bing.com/th/id/OIP.nUeiK1UGfKNlCEIwHdjRCAHaFj?rs=1&pid=ImgDetMain", // Replace with actual profile picture URL
+  loginMethod: "", // or "Email"
+};
 
 const TrackYourIssues: React.FC = () => {
   const [issues, setIssues] = useState(mockIssues);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
+      <Link to="/" className="absolute top-4 left-4 text-primary hover:text-primary/80">
+        <ChevronLeft className="h-6 w-6" />
+      </Link>
+
+      {/* User Dashboard Icon */}
+      <Link to="/dashboard" className="absolute top-4 right-4 flex items-center space-x-2">
+        <Button variant="outline" className="flex items-center space-x-2 p-2 bg-white rounded-full">
+          <div className="relative">
+            <User className="h-6 w-6 text-primary" />
+            <img
+              src={user.profilePicture}
+              alt={user.name}
+              className="h-6 w-6 rounded-full absolute top-0 left-0"
+            />
+          </div>
+        </Button>
+      </Link>
+
       {/* Page Header */}
       <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="mx-auto max-w-7xl text-center">
