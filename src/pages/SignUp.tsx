@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { supabase } from '@/lib/supabaseClient';
+import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 type FormData = {
@@ -12,18 +12,16 @@ type FormData = {
 };
 
 const SignUp: React.FC = () => {
+  const { signup } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const { user, error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-    });
-    if (error) {
-      console.error('Error signing up:', error);
-    } else {
+    try {
+      await signup(data.email, data.password);
       navigate('/login');
+    } catch (error) {
+      console.error('Error signing up:', error);
     }
   };
 
