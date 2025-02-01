@@ -27,12 +27,12 @@ const IssueList: React.FC<IssueListProps> = ({ issues }) => {
   const resolvedIssues = issues.filter(issue => issue.status === 'resolved');
 
   return (
-    <div className="issue-list">
-      <h2>Active Issues</h2>
+    <div className="issue-list p-6">
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Active Issues</h2>
       {issues.filter(issue => issue.status !== 'resolved').map(issue => (
         <IssueCard key={issue.id} issue={issue} />
       ))}
-      <h2>Resolved Issues</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">Resolved Issues</h2>
       {resolvedIssues.map(issue => (
         <IssueCard key={issue.id} issue={issue} />
       ))}
