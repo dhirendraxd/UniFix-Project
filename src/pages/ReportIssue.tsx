@@ -45,8 +45,8 @@ const ReportIssue = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Report an Issue</h1>
+        <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-lg shadow-lg">
+          <h1 className="text-4xl font-bold mb-2 text-foreground">Report an Issue</h1>
           <p className="text-muted-foreground mb-8">
             Help us resolve campus issues quickly and effectively. Please fill out the details below.
           </p>
@@ -92,7 +92,7 @@ const ReportIssue = () => {
             {/* File Upload */}
             <div className="space-y-2">
               <Label>Upload Photos</Label>
-              <div className="border-2 border-dashed rounded-lg p-8 text-center">
+              <div className="border-2 border-dashed rounded-lg p-8 text-center bg-white/50 backdrop-blur-md">
                 <Input
                   type="file"
                   multiple
@@ -179,7 +179,7 @@ const ReportIssue = () => {
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full bg-primary text-white">
               Submit Report
             </Button>
           </form>
