@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, FileText, Bell } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -14,8 +15,10 @@ const Index = () => {
             Get them fixed faster by notifying the right team.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="gap-2">
-              Report an Issue <ArrowRight className="h-4 w-4" />
+            <Button size="lg" className="gap-2" asChild>
+              <Link to="/report">
+                Report an Issue <ArrowRight className="h-4 w-4" />
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="gap-2">
               Track Your Issues <FileText className="h-4 w-4" />
