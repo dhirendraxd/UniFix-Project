@@ -1,3 +1,4 @@
+// src/App.tsx
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ReportIssue from "./pages/ReportIssue";
+import TrackYourIssues from "./pages/TractYourIssues"; // Import the new page
 
 // Create a client
 const queryClient = new QueryClient({
@@ -27,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/report" element={<ReportIssue />} />
+            <Route path="/track-issues" element={<TrackYourIssues />} /> {/* Add the new route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

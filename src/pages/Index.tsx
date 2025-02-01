@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="text-5xl font-bold text-primary mb-6">Take Action. Report Issues. Make Change.</h1>
@@ -134,7 +134,7 @@ const Index = () => {
                 <p className="text-muted-foreground italic mb-4">
                   "I reported a maintenance issue last night, and it was fixed by morning!"
                 </p>
-                <p className="font-semibold">- Sarah Johnson, Student</p>
+                <p className="font-semibold">- Hitesh, Student</p>
               </CardContent>
             </Card>
 
@@ -143,7 +143,7 @@ const Index = () => {
                 <p className="text-muted-foreground italic mb-4">
                   "The system makes it easy to resolve complaints with the right team."
                 </p>
-                <p className="font-semibold">- Prof. Michael Chen, Faculty</p>
+                <p className="font-semibold">- Abiral, Faculty</p>
               </CardContent>
             </Card>
           </div>
@@ -163,8 +163,8 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
               <p className="text-muted-foreground">
-                support@campus.edu<br />
-                1-800-CAMPUS-HELP
+                Unixfix@edu.np<br />
+                98624788xx - 98624788xx
               </p>
             </div>
             <div>
