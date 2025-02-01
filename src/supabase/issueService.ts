@@ -1,6 +1,5 @@
-
 // src/supabase/issueService.ts
-import { supabase } from './client';
+import { supabase } from '@/supabase/client'; // Updated path using alias
 
 export const getUserIssues = async () => {
   const user = supabase.auth.user();
