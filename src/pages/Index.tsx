@@ -1,3 +1,4 @@
+// src/pages/Index.tsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, FileText, Bell } from "lucide-react";
@@ -6,12 +7,12 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */ }
+      {/* Hero Section */}
       <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="text-5xl font-bold text-primary mb-6">Take Action. Report Issues. Make Change.</h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Our platform helps you report campus issues quickly and track progress in real-time. 
+            Our platform helps you report campus issues quickly and track progress in real-time.
             Get them fixed faster by notifying the right team.
           </p>
           <div className="flex gap-4 justify-center">
@@ -20,8 +21,10 @@ const Index = () => {
                 Report an Issue <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="gap-2">
-              Track Your Issues <FileText className="h-4 w-4" />
+            <Button size="lg" variant="outline" className="gap-2" asChild>
+              <Link to="/track-issues">
+                Track Your Issues <FileText className="h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>

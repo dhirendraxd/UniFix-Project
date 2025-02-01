@@ -1,4 +1,4 @@
-// src/components/IssueStatus.tsx
+// src/components/ui/IssuesStatus.tsx
 import React from 'react';
 
 interface IssueStatusProps {
