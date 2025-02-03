@@ -24,10 +24,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false); // Set loading to false after auth state is checked
     });
     return () => unsubscribe();
   }, []);
@@ -59,6 +61,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = async () => {
     await signOut(auth);
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Show loading indicator while checking auth state
+  }
 
   return (
     <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, loginWithGoogle, logout }}>
