@@ -5,7 +5,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   FacebookAuthProvider,
-  GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
   User,
@@ -16,7 +15,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   loginWithFacebook: () => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -28,6 +26,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('Auth state changed:', user); // Debugging statement
       setUser(user);
       setLoading(false); // Set loading to false after auth state is checked
     });
@@ -53,11 +52,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await signInWithPopup(auth, provider);
   };
 
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  };
-
   const logout = async () => {
     await signOut(auth);
   };
@@ -67,7 +61,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, logout }}>
       {children}
     </AuthContext.Provider>
   );

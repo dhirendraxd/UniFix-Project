@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const Index = () => {
   const { user } = useAuth();
+  console.log('User:', user); // Debugging statement
 
   return (
     <div className="min-h-screen bg-background">

@@ -12,7 +12,7 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
-  const { login, loginWithFacebook, loginWithGoogle } = useAuth();
+  const { login, loginWithFacebook } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
 
@@ -23,16 +23,6 @@ const Login: React.FC = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please check your credentials.');
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle();
-      navigate('/');
-    } catch (error) {
-      console.error('Error logging in with Google:', error);
-      alert('Error logging in with Google. Please try again.');
     }
   };
 
@@ -71,9 +61,6 @@ const Login: React.FC = () => {
           </div>
           <Button type="submit" className="w-full bg-primary text-white">
             Login
-          </Button>
-          <Button onClick={handleGoogleLogin} className="w-full bg-red-500 text-white">
-            Login with Google
           </Button>
           <Button onClick={handleFacebookLogin} className="w-full bg-blue-500 text-white">
             Login with Facebook
