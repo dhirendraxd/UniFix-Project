@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, FileText, Bell, LogIn, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+// import { Repeat trackissu.  } from "lucide-react";
 
 const Index = () => {
   const { user } = useAuth();

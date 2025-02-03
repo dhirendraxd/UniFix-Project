@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import IssueList from '@/components/ui/IssuesList';
-import FilterOptions from '@/components/ui/FilterOptions';
-import { mockIssues } from '@/mockData'; 
-
-
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ChevronLeft, User } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, User } from 'lucide-react';
 
 // Mock user data
 const user = {
@@ -15,9 +10,7 @@ const user = {
   loginMethod: "", // or "Email"
 };
 
-const TrackYourIssues: React.FC = () => {
-  const [issues, setIssues] = useState(mockIssues);
-
+const TrackYourIssues = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <Link to="/" className="absolute top-4 left-4 text-primary hover:text-primary/80">
@@ -48,19 +41,7 @@ const TrackYourIssues: React.FC = () => {
         </div>
       </section>
 
-      {/* Filter Options */}
-      <section className="py-16 px-6 bg-background">
-        <div className="mx-auto max-w-7xl">
-          <FilterOptions />
-        </div>
-      </section>
-
-      {/* Issue List */}
-      <section className="py-16 px-6 bg-background">
-        <div className="mx-auto max-w-7xl">
-          <IssueList issues={issues} />
-        </div>
-      </section>
+      {/* Add your track issues content here */}
 
       {/* Footer */}
       <footer className="py-12 px-6 bg-primary/5 text-muted-foreground">
@@ -68,27 +49,27 @@ const TrackYourIssues: React.FC = () => {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <h3 className="font-semibold mb-4">About Us</h3>
-              <p>
+              <p className="text-muted-foreground">
                 We're dedicated to making campus issue reporting and resolution simple and efficient.
               </p>
             </div>
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
-              <p>
+              <p className="text-muted-foreground">
                 Unixfix@edu.np<br />
                 98624788xx - 98624788xx
               </p>
             </div>
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-muted-foreground">
                 <li><a href="#" className="hover:text-primary">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-primary">Terms & Conditions</a></li>
                 <li><a href="#" className="hover:text-primary">FAQs</a></li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t text-center">
+          <div className="mt-8 pt-8 border-t text-center text-muted-foreground">
             <p>&copy; 2024 Campus Issue Reporting System. All rights reserved.</p>
           </div>
         </div>
