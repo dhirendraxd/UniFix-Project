@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   FacebookAuthProvider,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
   User,
@@ -15,6 +16,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   loginWithFacebook: () => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -43,12 +45,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await signInWithPopup(auth, provider);
   };
 
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  };
+
   const logout = async () => {
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );

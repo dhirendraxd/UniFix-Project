@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/lib/firebaseConfig';
 
 type FormData = {
   email: string;
@@ -23,6 +25,17 @@ const Login: React.FC = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please check your credentials.');
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging in with Google:', error);
+      alert('Error logging in with Google. Please try again.');
     }
   };
 
@@ -61,6 +74,9 @@ const Login: React.FC = () => {
           </div>
           <Button type="submit" className="w-full bg-primary text-white">
             Login
+          </Button>
+          <Button onClick={handleGoogleLogin} className="w-full bg-red-500 text-white">
+            Login with Google
           </Button>
           <Button onClick={handleFacebookLogin} className="w-full bg-blue-500 text-white">
             Login with Facebook
