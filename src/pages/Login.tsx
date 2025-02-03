@@ -5,8 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/lib/firebaseConfig';
 
 type FormData = {
   email: string;
@@ -14,7 +12,7 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
-  const { login, loginWithFacebook } = useAuth();
+  const { login, loginWithFacebook, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
 
@@ -30,8 +28,7 @@ const Login: React.FC = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await loginWithGoogle();
       navigate('/');
     } catch (error) {
       console.error('Error logging in with Google:', error);

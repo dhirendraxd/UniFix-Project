@@ -33,10 +33,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (email: string, password: string) => {
+    if (!email.endsWith('@kistcollege.edu.np')) {
+      throw new Error('Only @kistcollege.edu.np email addresses are allowed.');
+    }
     await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signup = async (email: string, password: string) => {
+    if (!email.endsWith('@kistcollege.edu.np')) {
+      throw new Error('Only @kistcollege.edu.np email addresses are allowed.');
+    }
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
