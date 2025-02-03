@@ -22,6 +22,7 @@ const Login: React.FC = () => {
       navigate('/');
     } catch (error) {
       console.error('Error logging in:', error);
+      alert('Error logging in. Please check your credentials.');
     }
   };
 
@@ -31,6 +32,7 @@ const Login: React.FC = () => {
       navigate('/');
     } catch (error) {
       console.error('Error logging in with Facebook:', error);
+      alert('Error logging in with Facebook. Please try again.');
     }
   };
 
