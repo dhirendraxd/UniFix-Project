@@ -15,6 +15,7 @@ const user = {
   profilePicture: "https://th.bing.com/th/id/OIP.nUeiK1UGfKNlCEIwHdjRCAHaFj?rs=1&pid=ImgDetMain", // Replace with actual profile picture URL
   points: 150,
   badges: ['Beginner', 'Intermediate', 'Advanced'],
+  role: 'Student', // or 'Faculty' or 'Staff'
 };
 
 // Mock issues data
@@ -35,7 +36,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchIssues = async () => {
       const issuesCollection = collection(db, 'issues');
-      const q = query(issuesCollection, where('userId', '==', 'user-id')); // Replace 'user-id' with the actual user ID
+      const q = query(issuesCollection, where('userId', '==', user.role === 'Student' ? 'student-id' : 'faculty-id')); // Replace 'user-id' with the actual user ID
       const issuesSnapshot = await getDocs(q);
       const issuesList = issuesSnapshot.docs.map(doc => doc.data());
       setIssues(issuesList);
