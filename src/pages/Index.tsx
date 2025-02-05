@@ -18,11 +18,11 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Profile Placeholder */}
       <div className="absolute top-4 left-4 flex items-center space-x-2">
-        <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-700">
-          <LogIn className="h-6 w-6" />
-        </div>
-        <Link to="/login" className="text-primary hover:text-primary/80 font-semibold">
-          {isLoggedIn ? "Profile" : "Log In / Sign In"}
+        <Link to="/login" className="flex items-center space-x-2 text-primary hover:text-primary/80">
+          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary/20 transition-colors duration-200">
+            <LogIn className="h-6 w-6" />
+          </div>
+          <span className="font-semibold">{isLoggedIn ? "Profile" : "Log In / Sign In"}</span>
         </Link>
       </div>
 
