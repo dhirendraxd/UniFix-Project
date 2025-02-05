@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import IssueStatus from '@/components/ui/IssuesStatus';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { formatDate, calculateTimeTaken } from '@/mockdata';
+import { formatDate, calculateTimeTaken } from '@/mockData';
 
 interface Issue {
   id: string;

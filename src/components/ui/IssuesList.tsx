@@ -1,4 +1,3 @@
-// src/components/IssueList.tsx
 import React from 'react';
 import IssueCard from '@/components/ui/IssuesCard';
 

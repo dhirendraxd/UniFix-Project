@@ -1,61 +1,27 @@
-// src/pages/Index.tsx
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FaArrowRight, FaCheckCircle, FaFileAlt, FaBell, FaSignInAlt, FaUserPlus, FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { ArrowRight, Bell, CheckCircle, LogIn } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, CheckCircle, FileText, Bell, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const Index: React.FC = () => {
-  const { user } = useAuth();
-  console.log('User:', user); // Debugging statement
-
+const Index = () => {
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Profile Icon */}
-      <div className="flex items-center justify-start p-4">
-        {user ? (
-          <Link to="/dashboard">
-            <FaUserCircle size={40} className="text-primary" />
-          </Link>
-        ) : (
-          <Link to="/login">
-            <LogIn size={40} className="text-primary" />
-          </Link>
-        )}
-      </div>
-
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background flex-grow">
+      <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="text-5xl font-bold text-primary mb-6">Take Action. Report Issues. Make Change.</h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Our platform helps you report campus issues quickly and track progress in real-time.
             Get them fixed faster by notifying the right team.
           </p>
-          {user ? (
-            <div className="flex gap-4 justify-center">
-              <Button size="lg" className="gap-2" asChild>
-                <Link to="/report">
-                  Report an Issue <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" className="gap-2" asChild>
-                <Link to="/track-issues">
-                                  Track Your Issues <FaFileAlt className="h-4 w-4" />
-                                </Link>
-              </Button>
-            </div>
-          ) : (
-            <div className="flex gap-4 justify-center mt-8">
-              <Button size="lg" variant="outline" className="gap-2" asChild>
-                <Link to="/login">
-                  Join Now <LogIn className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          )}
+          {/* Always show the "Join Now" button */}
+          <div className="flex gap-4 justify-center mt-8">
+            <Button size="lg" variant="outline" className="gap-2" asChild>
+              <Link to="/login">
+                Join Now <LogIn className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -67,11 +33,11 @@ const Index: React.FC = () => {
             <Card className="border-none shadow-none bg-transparent">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                                  <span className="bg-primary/10 p-2 rounded-full">
-                                    <FaFileAlt className="h-6 w-6 text-primary" />
-                                  </span>
-                                  Step 1: Report Your Issue
-                                </CardTitle>
+                  <span className="bg-primary/10 p-2 rounded-full">
+                    <FileText className="h-6 w-6 text-primary" />
+                  </span>
+                  Step 1: Report Your Issue
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
