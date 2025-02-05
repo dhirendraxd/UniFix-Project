@@ -21,9 +21,10 @@ interface Issue {
 
 interface IssueListProps {
   issues: Issue[];
+  showActions?: boolean; // New prop to control the visibility of actions
 }
 
-const IssueList: React.FC<IssueListProps> = ({ issues }) => {
+const IssueList: React.FC<IssueListProps> = ({ issues, showActions = true }) => {
   const activeIssues = issues.filter(issue => issue.status !== 'Resolved');
   const resolvedIssues = issues.filter(issue => issue.status === 'Resolved');
 
@@ -31,11 +32,11 @@ const IssueList: React.FC<IssueListProps> = ({ issues }) => {
     <div className="issue-list p-6">
       <h2 className="text-2xl font-bold text-foreground mb-4">Active Issues</h2>
       {activeIssues.map(issue => (
-        <IssueCard key={issue.id} issue={issue} />
+        <IssueCard key={issue.id} issue={issue} showActions={showActions} />
       ))}
       <h2 className="text-2xl font-bold text-foreground mb-4 mt-8">Resolved Issues</h2>
       {resolvedIssues.map(issue => (
-        <IssueCard key={issue.id} issue={issue} />
+        <IssueCard key={issue.id} issue={issue} showActions={showActions} />
       ))}
     </div>
   );

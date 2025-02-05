@@ -3,10 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronLeft, User, Trophy, FileText } from 'lucide-react';
+import { ChevronLeft, User, Trophy, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import IssueList from '@/components/ui/IssuesList';
-import FilterOptions from '@/components/ui/FilterOptions';
 import { db } from '@/lib/firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
@@ -15,7 +14,7 @@ const user = {
   name: "John Doe",
   profilePicture: "https://th.bing.com/th/id/OIP.nUeiK1UGfKNlCEIwHdjRCAHaFj?rs=1&pid=ImgDetMain", // Replace with actual profile picture URL
   points: 150,
-  badges: ['Beginner', 'Intermediate'],
+  badges: ['Beginner', 'Intermediate', 'Advanced'],
 };
 
 // Mock issues data
@@ -141,10 +140,42 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Filter Options Section */}
-      <section className="py-16 px-6 bg-background">
-        <div className="mx-auto max-w-7xl">
-          <FilterOptions />
+      {/* Highlights Section */}
+      <section className="py-16 px-6 bg-background flex items-center justify-center flex-col">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-12">Highlights</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="bg-primary/10">
+              <CardHeader>
+                <CardTitle>Most Active Reporter</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  You have reported the most issues this month. Keep up the good work!
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-primary/10">
+              <CardHeader>
+                <CardTitle>Fastest Resolution</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Your issue was resolved in record time. Great job!
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-primary/10">
+              <CardHeader>
+                <CardTitle>Community Contributor</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Your contributions have helped improve the campus environment. Thank you!
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
@@ -152,7 +183,7 @@ const Dashboard = () => {
       <section className="py-16 px-6 bg-background">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold text-center mb-12">Your Reports</h2>
-          <IssueList issues={issues} />
+          <IssueList issues={issues} showActions={false} />
         </div>
       </section>
 

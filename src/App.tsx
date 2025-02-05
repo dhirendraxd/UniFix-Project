@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import ReportIssue from './pages/ReportIssue';
 import TrackIssues from './pages/TractYourIssues';
 import Dashboard from './pages/Dashboard';
-import TrackYourIssues from './pages/TractYourIssues';
 
 const MainApp: React.FC = () => {
   return (
@@ -14,7 +13,7 @@ const MainApp: React.FC = () => {
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/report" element={<ReportIssue />} />
-        <Route path="/track-issues" element={<TrackYourIssues />} />
+        <Route path="/track-issues" element={<TrackIssues />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/sign-in/*" element={<Login />} />
         <Route path="/sign-up/*" element={<Login />} />
