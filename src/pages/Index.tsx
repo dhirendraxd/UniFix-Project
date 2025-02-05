@@ -20,12 +20,12 @@ const Index = () => {
           </p>
           {user ? (
             <div className="flex gap-4 justify-center">
-              <Button size="lg" className="gap-2" asChild>
+              <Button size="lg" className="gap-2" asChild aria-label="Report an Issue">
                 <Link to="/report">
                   Report an Issue <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="gap-2" asChild>
+              <Button size="lg" variant="outline" className="gap-2" asChild aria-label="Track Your Issues">
                 <Link to="/track-issues">
                   Track Your Issues <FileText className="h-4 w-4" />
                 </Link>
@@ -33,7 +33,7 @@ const Index = () => {
             </div>
           ) : (
             <div className="flex gap-4 justify-center mt-8">
-              <Button size="lg" variant="outline" className="gap-2" asChild>
+              <Button size="lg" variant="outline" className="gap-2" asChild aria-label="Join Now">
                 <Link to="/login">
                   Join Now <LogIn className="h-4 w-4" />
                 </Link>

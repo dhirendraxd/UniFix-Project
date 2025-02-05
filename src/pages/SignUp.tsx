@@ -1,3 +1,4 @@
+// src/components/SignUp.tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ const SignUp: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       await signup(data.email, data.password);
+      alert('Signup successful! Please check your email for verification.');
       navigate('/login');
     } catch (error) {
       console.error('Error signing up:', error);

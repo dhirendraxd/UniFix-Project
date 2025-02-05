@@ -1,3 +1,4 @@
+// src/components/Login.tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
+  console.log('Login component rendered'); // Debugging statement
   const { login } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
@@ -19,7 +21,7 @@ const Login: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password);
-      navigate('/');
+      navigate('/'); // Redirect to the main page after successful login
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please check your credentials.');

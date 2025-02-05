@@ -1,13 +1,15 @@
+// src/context/AuthContext.ts
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { auth, db } from '../lib/firebaseConfig';
 import {
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
   User,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import bcrypt from 'bcryptjs';
 
 interface AuthContextType {
   user: User | null;
@@ -32,29 +34,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (email: string, password: string) => {
-    if (!email.endsWith('@kistcollege.edu.np')) {
-      throw new Error('Only @kistcollege.edu.np email addresses are allowed.');
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user);
+    } catch (error) {
+      console.error('Error during login:', error);
+      throw error; // Re-throw the error to be caught in the component
     }
-    await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signup = async (email: string, password: string) => {
-    if (!email.endsWith('@kistcollege.edu.np')) {
-      throw new Error('Only @kistcollege.edu.np email addresses are allowed.');
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await setDoc(doc(db, 'users', email), {
+      email,
+      password: hashedPassword,
+      // Add any other user data you want to store
+    });
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    if (user) {
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        uid: user.uid,
-        // Add any other user data you want to store
-      });
-    }
+    setUser(userCredential.user);
   };
 
   const logout = async () => {
     await signOut(auth);
+    setUser(null);
   };
 
   if (loading) {
