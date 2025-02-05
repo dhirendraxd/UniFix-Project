@@ -22,6 +22,7 @@ const SignUp: React.FC = () => {
       navigate('/login');
     } catch (error) {
       console.error('Error signing up:', error);
+      alert('Error signing up. Please try again.');
     }
   };
 

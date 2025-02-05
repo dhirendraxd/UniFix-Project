@@ -12,7 +12,7 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
-  const { login, loginWithFacebook } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
 
@@ -23,16 +23,6 @@ const Login: React.FC = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please check your credentials.');
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    try {
-      await loginWithFacebook();
-      navigate('/');
-    } catch (error) {
-      console.error('Error logging in with Facebook:', error);
-      alert('Error logging in with Facebook. Please try again.');
     }
   };
 
@@ -61,9 +51,6 @@ const Login: React.FC = () => {
           </div>
           <Button type="submit" className="w-full bg-primary text-white">
             Login
-          </Button>
-          <Button onClick={handleFacebookLogin} className="w-full bg-blue-500 text-white">
-            Login with Facebook
           </Button>
         </form>
       </div>

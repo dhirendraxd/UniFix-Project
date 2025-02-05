@@ -1,20 +1,18 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { auth } from '../lib/firebaseConfig';
+import { auth, db } from '../lib/firebaseConfig';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithPopup,
-  FacebookAuthProvider,
   onAuthStateChanged,
   signOut,
   User,
 } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
-  loginWithFacebook: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -44,12 +42,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!email.endsWith('@kistcollege.edu.np')) {
       throw new Error('Only @kistcollege.edu.np email addresses are allowed.');
     }
-    await createUserWithEmailAndPassword(auth, email, password);
-  };
-
-  const loginWithFacebook = async () => {
-    const provider = new FacebookAuthProvider();
-    await signInWithPopup(auth, provider);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    if (user) {
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        uid: user.uid,
+        // Add any other user data you want to store
+      });
+    }
   };
 
   const logout = async () => {
@@ -61,7 +62,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, loginWithFacebook, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,11 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ChevronLeft, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import IssueList from '@/components/ui/IssuesList';
+import FilterOptions from '@/components/ui/FilterOptions';
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { ChevronLeft, User } from "lucide-react";
+import { db } from "@/lib/firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 // Mock user data
 const user = {
@@ -11,6 +15,19 @@ const user = {
 };
 
 const TrackYourIssues = () => {
+  const [issues, setIssues] = useState([]);
+
+  useEffect(() => {
+    const fetchIssues = async () => {
+      const issuesCollection = collection(db, 'issues');
+      const issuesSnapshot = await getDocs(issuesCollection);
+      const issuesList = issuesSnapshot.docs.map(doc => doc.data());
+      setIssues(issuesList);
+    };
+
+    fetchIssues();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <Link to="/" className="absolute top-4 left-4 text-primary hover:text-primary/80">
@@ -41,7 +58,19 @@ const TrackYourIssues = () => {
         </div>
       </section>
 
-      {/* Add your track issues content here */}
+      {/* Filter Options */}
+      <section className="py-16 px-6 bg-background">
+        <div className="mx-auto max-w-7xl">
+          <FilterOptions />
+        </div>
+      </section>
+
+      {/* Issue List */}
+      <section className="py-16 px-6 bg-background">
+        <div className="mx-auto max-w-7xl">
+          <IssueList issues={issues} />
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="py-12 px-6 bg-primary/5 text-muted-foreground">

@@ -1,21 +1,23 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
-import { MapPin, Upload, ChevronLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+} from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { MapPin, Upload, ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { db } from '@/lib/firebaseConfig';
+import { addDoc, collection } from 'firebase/firestore';
 
 type FormData = {
   category: string;
@@ -35,7 +37,7 @@ const ReportIssue = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     if (!files || files.length === 0) {
       toast({
         title: "Error",
@@ -45,11 +47,27 @@ const ReportIssue = () => {
       return;
     }
 
-    console.log(data, files);
-    toast({
-      title: "Report Submitted Successfully",
-      description: "You will receive updates on its progress.",
-    });
+    try {
+      const issuesCollection = collection(db, 'issues');
+      await addDoc(issuesCollection, {
+        ...data,
+        files: Array.from(files).map(file => ({
+          name: file.name,
+          url: URL.createObjectURL(file), // You might want to upload these to Firebase Storage instead
+        })),
+      });
+      toast({
+        title: "Report Submitted Successfully",
+        description: "You will receive updates on its progress.",
+      });
+    } catch (error) {
+      console.error("Error submitting report:", error);
+      toast({
+        title: "Error",
+        description: "There was an error submitting your report.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
