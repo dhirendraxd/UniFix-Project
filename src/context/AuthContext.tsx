@@ -22,24 +22,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log('Auth state changed:', user); // Debugging statement
+      console.log('Auth state changed:', user);
       setUser(user);
-      setLoading(false); // Set loading to false after auth state is checked
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
   const login = async (email: string, password: string) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error('Error during login:', error);
-      throw error; // Re-throw the error to be caught in the component
+    const userDoc = await getDoc(doc(db, 'users', email));
+    if (userDoc.exists()) {
+      const storedPassword = userDoc.data().password;
+      const isMatch = await bcrypt.compare(password, storedPassword);
+      if (isMatch) {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        setUser(userCredential.user);
+      } else {
+        throw new Error('Invalid email or password');
+      }
+    } else {
+      throw new Error('User not found');
     }
   };
 
@@ -48,7 +54,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await setDoc(doc(db, 'users', email), {
       email,
       password: hashedPassword,
-      // Add any other user data you want to store
     });
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     setUser(userCredential.user);
@@ -60,7 +65,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading indicator while checking auth state
+    return <div>Loading...</div>;
   }
 
   return (

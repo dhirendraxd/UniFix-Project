@@ -13,7 +13,7 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
-  console.log('Login component rendered'); // Debugging statement
+  console.log('Login component rendered');
   const { login } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormData>();
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password);
-      navigate('/'); // Redirect to the main page after successful login
+      navigate('/');
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in. Please check your credentials.');
