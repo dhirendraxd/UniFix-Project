@@ -1,20 +1,17 @@
 // src/context/AuthContext.ts
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { auth, db } from '../lib/firebaseConfig';
+import { auth, googleProvider, db } from '../lib/firebaseConfig';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
+  signInWithPopup,
   signOut,
+  onAuthStateChanged,
   User,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import bcrypt from 'bcryptjs';
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -33,30 +30,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => unsubscribe();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const userDoc = await getDoc(doc(db, 'users', email));
-    if (userDoc.exists()) {
-      const storedPassword = userDoc.data().password;
-      const isMatch = await bcrypt.compare(password, storedPassword);
-      if (isMatch) {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        setUser(userCredential.user);
-      } else {
-        throw new Error('Invalid email or password');
-      }
-    } else {
-      throw new Error('User not found');
-    }
-  };
+  const loginWithGoogle = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const user = userCredential.user;
+      setUser(user);
 
-  const signup = async (email: string, password: string) => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await setDoc(doc(db, 'users', email), {
-      email,
-      password: hashedPassword,
-    });
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    setUser(userCredential.user);
+      // Store user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid,
+      });
+    } catch (error) {
+      console.error('Error logging in with Google:', error);
+      alert('Error logging in with Google. Please try again.');
+    }
   };
 
   const logout = async () => {
@@ -69,7 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );

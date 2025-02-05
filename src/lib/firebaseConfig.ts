@@ -1,9 +1,7 @@
 // src/lib/firebaseConfig.ts
-import { initializeApp } from 'firebase/app'; // these files are being imprted form the firebase documentation
-import { getAuth } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-// Your web app's Firebase configuration
-// import { db } from '@/lib/firebaseConfig';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDKj4VDf1zNHjyDLBiY8Y0ptJHYARE1vtQ",
@@ -15,12 +13,9 @@ const firebaseConfig = {
   appId: "1:127471907329:web:3a6a88754c653432258600"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
-export { auth, db };
-// src/pages/TractYourIssues.tsx
-
-
+export { auth, googleProvider, db };
