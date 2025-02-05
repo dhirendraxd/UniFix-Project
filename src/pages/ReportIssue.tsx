@@ -197,22 +197,7 @@ const ReportIssue = () => {
               <Label className="font-semibold" htmlFor="anonymous">Remain Anonymous</Label>
             </div>
 
-            {!isAnonymous && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" {...register("name")} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" {...register("email")} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" {...register("phone")} />
-                </div>
-              </div>
-            )}
+           
           </div>
 
           {/* Submit Button */}

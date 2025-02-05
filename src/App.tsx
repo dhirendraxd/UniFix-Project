@@ -1,25 +1,22 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import ReportIssue from './pages/ReportIssue';
-import TrackIssues from './pages/TractYourIssues';
-import Dashboard from './pages/Dashboard';
+import TrackYourIssue from './pages/TractYourIssues';
 
-const MainApp: React.FC = () => {
+const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/report" element={<ReportIssue />} />
-        <Route path="/track-issues" element={<TrackIssues />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/sign-in/*" element={<Login />} />
-        <Route path="/sign-up/*" element={<Login />} />
+        <Route path="/report-issue" element={<ReportIssue />} />
+        <Route path="/track-issue" element={<TrackYourIssue />} />
       </Routes>
     </Router>
   );
 };
 
-export default MainApp;
+export default App;

@@ -18,6 +18,7 @@ const TrackYourIssues = () => {
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
+    // Fetch issues from the database and update the state with the data
     const fetchIssues = async () => {
       const issuesCollection = collection(db, 'issues');
       const issuesSnapshot = await getDocs(issuesCollection);
