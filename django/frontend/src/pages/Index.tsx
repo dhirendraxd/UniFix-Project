@@ -7,12 +7,34 @@ import { useEffect, useState } from 'react';
 
 const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [data, setData] = useState<unknown>(null); // State to store fetched data
+  const [loading, setLoading] = useState(true); // To handle loading state
+  const [error, setError] = useState<string | null>(null); // Error state
 
   useEffect(() => {
     // Check if the user is logged in by reading the flag from localStorage
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedIn);
-  }, []);
+
+    // API Request
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/data'); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result); // Store the data in state
+      } catch (error) {
+        setError('Failed to fetch data');
+      } finally {
+        setLoading(false); // Set loading to false once the request completes
+      }
+    };
+
+    fetchData(); // Call the fetchData function to make the API request
+
+  }, []); // Empty dependency array ensures this runs only once on component mount
 
   return (
     <div className="min-h-screen bg-background">
@@ -57,6 +79,22 @@ const Index = () => {
               </Button>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* Conditionally render API data or loading indicator */}
+      <section className="py-16 px-6 bg-background">
+        <div className="mx-auto max-w-7xl">
+          {loading ? (
+            <p>Loading data...</p> // Show loading indicator while fetching
+          ) : error ? (
+            <p className="text-red-500">Error: {error}</p> // Show error message
+          ) : (
+            <div>
+              <h2 className="text-3xl font-bold text-center mb-12">Fetched Data</h2>
+              <pre className="bg-gray-200 p-4">{JSON.stringify(data, null, 2)}</pre>
+            </div>
+          )}
         </div>
       </section>
 
