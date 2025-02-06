@@ -1,53 +1,11 @@
-// src/components/Index.tsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, FileText, Bell, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from 'react';
 
 const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [data, setData] = useState<unknown>(null); // State to store fetched data
-  const [loading, setLoading] = useState(true); // To handle loading state
-  const [error, setError] = useState<string | null>(null); // Error state
-
-  useEffect(() => {
-    // Check if the user is logged in by reading the flag from localStorage
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedIn);
-
-    // API Request
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://api.example.com/data'); // Replace with your API endpoint
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result); // Store the data in state
-      } catch (error) {
-        setError('Failed to fetch data');
-      } finally {
-        setLoading(false); // Set loading to false once the request completes
-      }
-    };
-
-    fetchData(); // Call the fetchData function to make the API request
-
-  }, []); // Empty dependency array ensures this runs only once on component mount
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Profile Placeholder */}
-      <div className="absolute top-4 left-4 flex items-center space-x-2">
-        <Link to="/login" className="flex items-center space-x-2 text-primary hover:text-primary/80">
-          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary/20 transition-colors duration-200">
-            <LogIn className="h-6 w-6" />
-          </div>
-          <span className="font-semibold">{isLoggedIn ? "Profile" : "Log In / Sign In"}</span>
-        </Link>
-      </div>
-
       {/* Hero Section */}
       <section className="px-6 py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="mx-auto max-w-7xl text-center">
@@ -56,45 +14,14 @@ const Index = () => {
             Our platform helps you report campus issues quickly and track progress in real-time.
             Get them fixed faster by notifying the right team.
           </p>
-          {/* Conditionally render buttons based on login state */}
+          {/* Always show the "Join Now" button */}
           <div className="flex gap-4 justify-center mt-8">
-            {isLoggedIn ? (
-              <>
-                <Button size="lg" variant="outline" className="gap-2" asChild>
-                  <Link to="/report-issue">
-                    Report Your Issues <FileText className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" className="gap-2" asChild>
-                  <Link to="/track-issue">
-                    Track Your Issues <CheckCircle className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </>
-            ) : (
-              <Button size="lg" variant="outline" className="gap-2" asChild>
-                <Link to="/login">
-                  Join Now <LogIn className="h-4 w-4" />
-                </Link>
-              </Button>
-            )}
+            <Button size="lg" variant="outline" className="gap-2" asChild>
+              <Link to="/login">
+                Join Now <LogIn className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
-        </div>
-      </section>
-
-      {/* Conditionally render API data or loading indicator */}
-      <section className="py-16 px-6 bg-background">
-        <div className="mx-auto max-w-7xl">
-          {loading ? (
-            <p>Loading data...</p> // Show loading indicator while fetching
-          ) : error ? (
-            <p className="text-red-500">Error: {error}</p> // Show error message
-          ) : (
-            <div>
-              <h2 className="text-3xl font-bold text-center mb-12">Fetched Data</h2>
-              <pre className="bg-gray-200 p-4">{JSON.stringify(data, null, 2)}</pre>
-            </div>
-          )}
         </div>
       </section>
 
