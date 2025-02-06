@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       input: 'src/main.tsx', // Ensure this points to your entry file
     },
