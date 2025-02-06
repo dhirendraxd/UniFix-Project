@@ -1,9 +1,8 @@
+# naya/urls.py
 from django.contrib import admin
-from django.urls import path, include
-from naya.views import FrontendAppView  # Import your view to serve the React app
+from django.urls import path, include  # Include to reference other app URLs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api_app.urls')),  # Include your API URLs here
-    path('', FrontendAppView.as_view(), name='home'),  # Serve the React app via FrontendAppView
+    path('api/', include('api_app.urls')),  # Add your app's URLs here
 ]

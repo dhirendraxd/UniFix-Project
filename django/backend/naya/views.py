@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from django.views import View
+from django.conf import settings
+from django.conf.urls.static import static
 
-class FrontendAppView(View):
-    def get(self, request):
-        return render(request, 'index.html')
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
