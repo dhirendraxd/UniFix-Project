@@ -1,15 +1,25 @@
+
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
+import { auth } from '@/lib/firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const ProtectedRoute = () => {
-  const { user } = useAuth();
-  console.log('ProtectedRoute user:', user); // Debugging statement
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  if (!user) {
-    return <Navigate to="/login" />;
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>;
   }
 
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

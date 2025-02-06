@@ -1,9 +1,9 @@
-import { auth, facebookProvider } from '../../lib/firebaseConfig';
+
+import { auth } from '../../lib/firebaseConfig';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
-  signOut, 
-  signInWithPopup 
+  signOut
 } from 'firebase/auth';
 
 // Sign Up with Email/Password
@@ -34,17 +34,6 @@ export const logOut = async () => {
     await signOut(auth);
   } catch (error) {
     console.error("Error logging out:", error);
-    throw error;
-  }
-};
-
-// Log In with Facebook
-export const signInWithFacebook = async () => {
-  try {
-    const result = await signInWithPopup(auth, facebookProvider);
-    return result.user;
-  } catch (error) {
-    console.error("Error signing in with Facebook:", error);
     throw error;
   }
 };

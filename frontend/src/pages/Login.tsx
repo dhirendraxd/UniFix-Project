@@ -1,17 +1,46 @@
-// src/components/Login.tsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ChevronLeft } from 'lucide-react';
+import { useToast } from "@/components/ui/use-toast";
+import { Label } from "@/components/ui/label";
+import { logInWithEmail, signUpWithEmail } from '@/integrations/firebase/auth';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { toast } = useToast();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLoginClick = () => {
-    // Simulate login by setting the login state
-    setIsLoggedIn(true);
-    navigate('/', { state: { isLoggedIn: true } });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (isSignUp) {
+        await signUpWithEmail(email, password);
+        toast({
+          title: "Account created successfully!",
+          description: "Please log in with your new account.",
+        });
+        setIsSignUp(false);
+      } else {
+        await logInWithEmail(email, password);
+        navigate('/dashboard');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBackClick = () => {
@@ -28,10 +57,47 @@ const Login: React.FC = () => {
         <ChevronLeft className="h-6 w-6" />
       </Button>
       <div className="container mx-auto py-8 px-4 max-w-md bg-white/80 backdrop-blur-md p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-foreground text-center">Login</h1>
-        <Button onClick={handleLoginClick} className="mt-4 w-full">
-          Login
-        </Button>
+        <h1 className="text-3xl font-bold mb-6 text-foreground text-center">
+          {isSignUp ? "Create Account" : "Login"}
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Loading..." : (isSignUp ? "Sign Up" : "Login")}
+          </Button>
+        </form>
+        <div className="mt-4 text-center">
+          <Button
+            variant="link"
+            onClick={() => setIsSignUp(!isSignUp)}
+            className="text-primary"
+          >
+            {isSignUp
+              ? "Already have an account? Login"
+              : "Don't have an account? Sign Up"}
+          </Button>
+        </div>
       </div>
     </div>
   );
